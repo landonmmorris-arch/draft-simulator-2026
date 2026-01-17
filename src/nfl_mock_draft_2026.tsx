@@ -1497,15 +1497,8 @@ const NFLMockDraft = () => {
     setDraftPaused(false);
   };
 
-  // Play NFL Draft theme once when draft starts
-  useEffect(() => {
-    if (state === 'drafting' && draftAudioRef.current && !audioPlayed.current) {
-      audioPlayed.current = true;
-      draftAudioRef.current.play().catch(err => {
-        console.log('Audio playback failed:', err);
-      });
-    }
-  }, [state]);
+  // Audio is now played directly in the Start Draft button click handler
+  // to avoid browser autoplay restrictions
 
   // Reset trades count at start of each round
   useEffect(() => {
@@ -1805,7 +1798,16 @@ const NFLMockDraft = () => {
                 </div>
               </div>
 
-              <button onClick={() => setState('drafting')}
+              <button onClick={() => {
+                setState('drafting');
+                // Play audio on user click to avoid autoplay restrictions
+                if (draftAudioRef.current && !audioPlayed.current) {
+                  audioPlayed.current = true;
+                  draftAudioRef.current.play().catch(err => {
+                    console.log('Audio playback failed:', err);
+                  });
+                }
+              }}
                 className="w-full py-4 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-lg font-bold text-xl">
                 {myTeams.length > 0 ? 'Start Draft' : 'Start Draft (Spectator Mode)'}
               </button>
@@ -2048,7 +2050,7 @@ const NFLMockDraft = () => {
 
         <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 mb-6 border border-white/20">
           <div className="flex justify-between mb-4">
-            <h1 className="text-3xl font-bold text-white">2026 NFL Draft</h1>
+            <h1 className="text-3xl font-bold text-white">2026 NFL Draft <span className="text-xs text-gray-400">v1.1</span></h1>
             <div className="text-white flex items-center gap-2">
               <Clock className="w-5 h-5" />
               <span>R{round} | Pick {pick+1}/{totalPicks}</span>
