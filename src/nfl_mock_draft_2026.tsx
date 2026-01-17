@@ -1803,9 +1803,17 @@ const NFLMockDraft = () => {
                 // Play audio on user click to avoid autoplay restrictions
                 if (draftAudioRef.current && !audioPlayed.current) {
                   audioPlayed.current = true;
-                  draftAudioRef.current.play().catch(err => {
-                    console.log('Audio playback failed:', err);
-                  });
+                  console.log('Attempting to play audio...');
+                  draftAudioRef.current.play()
+                    .then(() => console.log('Audio started successfully'))
+                    .catch(err => {
+                      console.error('Audio playback failed:', err);
+                      alert('Audio failed to play. Check console for details.');
+                    });
+                } else if (audioPlayed.current) {
+                  console.log('Audio already played');
+                } else {
+                  console.log('Audio ref not available');
                 }
               }}
                 className="w-full py-4 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-lg font-bold text-xl">
@@ -2160,18 +2168,18 @@ const NFLMockDraft = () => {
                     <div className="flex items-center gap-3">
                       <img src={teamLogos[option.targetTeam]} alt={option.targetTeam} className="w-10 h-10 object-contain" />
                       <div>
-                        <p className="text-white font-semibold">Pick #{option.targetPickInRound} - {option.targetTeam}</p>
+                        <p className="text-white font-semibold">Pick #{tradeMode === 'up' ? option.targetPickNum + 1 : option.targetPickNum + 1} - {option.targetTeam}</p>
                         <p className="text-gray-300 text-sm">
                           {tradeMode === 'up' ? (
                             option.useFuturePicks ? (
                               <>You give: {option.additionalPicks.map((p: DraftPick) => formatPickDisplay(p.round, p.year, p.fromTeam)).join(', ')}</>
                             ) : (
-                              <>You give: Pick #{option.userPickInRound}
+                              <>You give: Pick #{option.userPickNum + 1}
                                 {option.additionalPicks.length > 0 && ` + ${option.additionalPicks.map((p: DraftPick) => formatPickDisplay(p.round, p.year, p.fromTeam)).join(', ')}`}
                               </>
                             )
                           ) : (
-                            <>You receive: Pick #{option.targetPickInRound}
+                            <>You receive: Pick #{option.targetPickNum + 1}
                               {option.additionalPicks.length > 0 && ` + ${option.additionalPicks.join(', ')}`}
                             </>
                           )}
