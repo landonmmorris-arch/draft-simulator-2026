@@ -562,13 +562,13 @@ const NFLMockDraft = () => {
   // Helper to format pick display
   const formatPickDisplay = (round: number, year: number, team?: string, actualPickNum?: number) => {
     if (year === 2026 && actualPickNum !== undefined) {
-      // For 2026 with actual pick number, show it
-      return team ? `Pick #${actualPickNum + 1} (from ${team})` : `Pick #${actualPickNum + 1}`;
+      // For 2026 with actual pick number provided, show round + pick number
+      return team ? `2026 R${round} - Pick #${actualPickNum + 1} (from ${team})` : `2026 R${round} - Pick #${actualPickNum + 1}`;
     } else if (year === 2026 && team) {
       // For 2026 with team, calculate pick number based on team's draft position
       const teamPosition = getTeamDraftPosition(team);
       const pickNum = (round - 1) * 32 + teamPosition;
-      return `Pick #${pickNum + 1} (from ${team})`;
+      return `2026 R${round} - Pick #${pickNum + 1} (from ${team})`;
     } else if (year === 2026) {
       // For 2026, show year and round when we don't have exact pick or team
       return `2026 R${round}`;
