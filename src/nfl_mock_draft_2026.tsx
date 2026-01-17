@@ -560,21 +560,25 @@ const NFLMockDraft = () => {
   };
 
   // Helper to format pick display
-  const formatPickDisplay = (round: number, year: number, team?: string, actualPickNum?: number) => {
-    if (year === 2026 && actualPickNum !== undefined) {
-      // For 2026 with actual pick number provided, show round + pick number
-      return team ? `2026 R${round} - Pick #${actualPickNum + 1} (from ${team})` : `2026 R${round} - Pick #${actualPickNum + 1}`;
-    } else if (year === 2026 && team) {
-      // For 2026 with team, calculate pick number based on team's draft position
-      const teamPosition = getTeamDraftPosition(team);
-      const pickNum = (round - 1) * 32 + teamPosition;
-      return `2026 R${round} - Pick #${pickNum + 1} (from ${team})`;
-    } else if (year === 2026) {
-      // For 2026, show year and round when we don't have exact pick or team
+  const formatPickDisplay = (round: number, year: number, fromTeam?: string, actualPickNum?: number, ownerTeam?: string) => {
+    if (year === 2026) {
+      // For 2026 picks, calculate actual pick number
+      const teamToUse = fromTeam || ownerTeam;
+      if (teamToUse) {
+        const teamPosition = getTeamDraftPosition(teamToUse);
+        const pickNum = actualPickNum !== undefined ? actualPickNum : (round - 1) * 32 + teamPosition;
+        // Only show "(from Team)" if it's actually a traded pick (fromTeam exists)
+        if (fromTeam) {
+          return `2026 R${round} - Pick #${pickNum + 1} (from ${fromTeam})`;
+        } else {
+          return `2026 R${round} - Pick #${pickNum + 1}`;
+        }
+      }
+      // Fallback if no team info
       return `2026 R${round}`;
     } else {
       // For future years, show year and round
-      return team ? `${year} R${round} (from ${team})` : `${year} R${round}`;
+      return fromTeam ? `${year} R${round} (from ${fromTeam})` : `${year} R${round}`;
     }
   };
 
@@ -2460,7 +2464,7 @@ const NFLMockDraft = () => {
                           onClick={() => toggleCustomGivePick(p, i)}
                           className={`p-2 rounded-lg text-sm ${isSelected ? 'bg-red-600 text-white' : 'bg-white/10 text-gray-300 hover:bg-white/20'}`}
                         >
-                          {formatPickDisplay(p.round, p.year, p.fromTeam)}
+                          {formatPickDisplay(p.round, p.year, p.fromTeam, undefined, myTeams[0])}
                         </button>
                       );
                     })}
@@ -2485,7 +2489,7 @@ const NFLMockDraft = () => {
                           onClick={() => toggleCustomReceivePick(p, i)}
                           className={`p-2 rounded-lg text-sm ${isSelected ? 'bg-green-600 text-white' : 'bg-white/10 text-gray-300 hover:bg-white/20'}`}
                         >
-                          {formatPickDisplay(p.round, p.year, p.fromTeam)}
+                          {formatPickDisplay(p.round, p.year, p.fromTeam, undefined, customTradeTeam)}
                         </button>
                       );
                     })}
