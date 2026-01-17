@@ -1499,8 +1499,30 @@ const NFLMockDraft = () => {
     setDraftPaused(false);
   };
 
-  // Audio is now played directly in the Start Draft button click handler
-  // to avoid browser autoplay restrictions
+  // Play audio when draft starts - must happen AFTER state changes to avoid unmounting
+  useEffect(() => {
+    if (state === 'drafting' && !audioPlayed.current && draftAudioRef.current) {
+      audioPlayed.current = true;
+      // Small delay to ensure audio element is mounted in new state
+      setTimeout(() => {
+        if (draftAudioRef.current) {
+          console.log('Attempting to play audio after state change...');
+          console.log('Audio element:', draftAudioRef.current);
+          console.log('Audio src:', draftAudioRef.current.src);
+          draftAudioRef.current.volume = 1.0;
+          draftAudioRef.current.play()
+            .then(() => {
+              console.log('Audio started successfully');
+              console.log('Audio paused?', draftAudioRef.current?.paused);
+              console.log('Audio current time:', draftAudioRef.current?.currentTime);
+            })
+            .catch(err => {
+              console.error('Audio playback failed:', err);
+            });
+        }
+      }, 100);
+    }
+  }, [state]);
 
   // Reset trades count at start of each round
   useEffect(() => {
@@ -1800,32 +1822,7 @@ const NFLMockDraft = () => {
                 </div>
               </div>
 
-              <button onClick={() => {
-                setState('drafting');
-                // Play audio on user click to avoid autoplay restrictions
-                if (draftAudioRef.current && !audioPlayed.current) {
-                  audioPlayed.current = true;
-                  console.log('Attempting to play audio...');
-                  console.log('Audio element:', draftAudioRef.current);
-                  console.log('Audio src:', draftAudioRef.current.src);
-                  console.log('Audio volume:', draftAudioRef.current.volume);
-                  draftAudioRef.current.volume = 1.0;
-                  draftAudioRef.current.play()
-                    .then(() => {
-                      console.log('Audio started successfully');
-                      console.log('Audio paused?', draftAudioRef.current.paused);
-                      console.log('Audio current time:', draftAudioRef.current.currentTime);
-                    })
-                    .catch(err => {
-                      console.error('Audio playback failed:', err);
-                      alert('Audio failed to play: ' + err.message);
-                    });
-                } else if (audioPlayed.current) {
-                  console.log('Audio already played');
-                } else {
-                  console.log('Audio ref not available');
-                }
-              }}
+              <button onClick={() => setState('drafting')}
                 className="w-full py-4 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-lg font-bold text-xl">
                 {myTeams.length > 0 ? 'Start Draft' : 'Start Draft (Spectator Mode)'}
               </button>
