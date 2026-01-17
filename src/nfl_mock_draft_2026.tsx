@@ -554,11 +554,13 @@ const NFLMockDraft = () => {
   };
 
   // Helper to format pick display
-  const formatPickDisplay = (round: number, year: number, team?: string) => {
-    if (year === 2026) {
-      // For 2026, show actual pick number (estimate mid-round)
-      const pickNum = (round - 1) * 32 + 16;
-      return team ? `Pick #${pickNum} (from ${team})` : `Pick #${pickNum}`;
+  const formatPickDisplay = (round: number, year: number, team?: string, actualPickNum?: number) => {
+    if (year === 2026 && actualPickNum !== undefined) {
+      // For 2026 with actual pick number, show it
+      return team ? `Pick #${actualPickNum + 1} (from ${team})` : `Pick #${actualPickNum + 1}`;
+    } else if (year === 2026) {
+      // For 2026, show year and round when we don't have exact pick
+      return team ? `2026 R${round} (from ${team})` : `2026 R${round}`;
     } else {
       // For future years, show year and round
       return team ? `${year} R${round} (from ${team})` : `${year} R${round}`;
@@ -905,7 +907,9 @@ const NFLMockDraft = () => {
       for (let j = 0; j < extraPicksReceived; j++) {
         const futureRound = currentRound + 2 + j;
         if (futureRound <= rounds) {
-          futurePicks.push(formatPickDisplay(futureRound, 2026));
+          // Calculate actual pick number for this round (estimate mid-round for their pick)
+          const estimatedPickNum = (futureRound - 1) * 32 + (i); // Use their position in round
+          futurePicks.push(formatPickDisplay(futureRound, 2026, undefined, estimatedPickNum));
         } else {
           futurePicks.push(formatPickDisplay(j + 2, 2027));
         }
