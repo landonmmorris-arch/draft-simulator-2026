@@ -928,7 +928,7 @@ const NFLMockDraft = () => {
         }
       }
 
-      options.push({
+      const option = {
         targetTeam,
         targetPickNum,
         targetPickInRound: i + 1,
@@ -936,7 +936,9 @@ const NFLMockDraft = () => {
         additionalPicks: futurePicks,
         // AI acceptance probability - they want to move up!
         acceptChance: Math.min(0.85, 0.6 + (extraPicksReceived * 0.1))
-      });
+      };
+      console.log('Trade DOWN option created:', option);
+      options.push(option);
     }
 
     return options;
@@ -1804,11 +1806,19 @@ const NFLMockDraft = () => {
                 if (draftAudioRef.current && !audioPlayed.current) {
                   audioPlayed.current = true;
                   console.log('Attempting to play audio...');
+                  console.log('Audio element:', draftAudioRef.current);
+                  console.log('Audio src:', draftAudioRef.current.src);
+                  console.log('Audio volume:', draftAudioRef.current.volume);
+                  draftAudioRef.current.volume = 1.0;
                   draftAudioRef.current.play()
-                    .then(() => console.log('Audio started successfully'))
+                    .then(() => {
+                      console.log('Audio started successfully');
+                      console.log('Audio paused?', draftAudioRef.current.paused);
+                      console.log('Audio current time:', draftAudioRef.current.currentTime);
+                    })
                     .catch(err => {
                       console.error('Audio playback failed:', err);
-                      alert('Audio failed to play. Check console for details.');
+                      alert('Audio failed to play: ' + err.message);
                     });
                 } else if (audioPlayed.current) {
                   console.log('Audio already played');
@@ -1823,7 +1833,7 @@ const NFLMockDraft = () => {
           </div>
         </div>
         {/* NFL Draft Theme Audio - must be available in setup state */}
-        <audio ref={draftAudioRef} src="/nfl-draft-theme.mp3" preload="auto" />
+        <audio ref={draftAudioRef} src="/nfl-draft-theme.mp3" preload="auto" volume="1.0" />
       </div>
     );
   }
@@ -2182,7 +2192,10 @@ const NFLMockDraft = () => {
                             )
                           ) : (
                             <>You receive: Pick #{option.targetPickNum + 1}
-                              {option.additionalPicks.length > 0 && ` + ${option.additionalPicks.join(', ')}`}
+                              {option.additionalPicks.length > 0 && ` + ${option.additionalPicks.map((pickStr: string) => {
+                                console.log('Additional pick string:', pickStr);
+                                return pickStr;
+                              }).join(', ')}`}
                             </>
                           )}
                         </p>
