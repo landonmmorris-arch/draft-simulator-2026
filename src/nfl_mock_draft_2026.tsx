@@ -751,9 +751,11 @@ const NFLMockDraft = () => {
     for (let i = 0; i < extraPicksNeeded; i++) {
       const futureRound = currentRound + 2 + i;
       if (futureRound <= rounds) {
-        futurePicks.push(formatPickDisplay(futureRound, 2026));
+        // Calculate actual pick number for this round based on buyer's position
+        const estimatedPickNum = (futureRound - 1) * 32 + buyerPickPosition;
+        futurePicks.push(formatPickDisplay(futureRound, 2026, buyerTeam, estimatedPickNum));
       } else {
-        futurePicks.push(formatPickDisplay(i + 2, 2027));
+        futurePicks.push(formatPickDisplay(i + 2, 2027, buyerTeam));
       }
     }
 
@@ -1060,13 +1062,26 @@ const NFLMockDraft = () => {
 
       option.additionalPicks.forEach((pickStr: string) => {
         // Parse the pick string to create a DraftPick object
-        const match = pickStr.match(/Round (\d+)/);
-        if (match) {
-          const roundNum = parseInt(match[1]);
+        // Try new format first: "Pick #48" or "Pick #48 (from TeamName)"
+        let pickMatch = pickStr.match(/Pick #(\d+)/);
+        if (pickMatch) {
+          const pickNum = parseInt(pickMatch[1]) - 1; // Convert to 0-indexed
+          const roundNum = Math.floor(pickNum / 32) + 1;
           const year = pickStr.includes('2027') ? 2027 : pickStr.includes('2028') ? 2028 : 2026;
-          const draftPick = { round: roundNum, year, fromTeam: option.targetTeam };
+          const fromTeamMatch = pickStr.match(/from ([^)]+)/);
+          const draftPick = { round: roundNum, year, fromTeam: fromTeamMatch ? fromTeamMatch[1] : option.targetTeam };
           newAcquired.push(draftPick);
           userPicks.push(draftPick);
+        } else {
+          // Fall back to old format: "2026 R2" or "Round 2"
+          const roundMatch = pickStr.match(/(?:Round |R)(\d+)/);
+          if (roundMatch) {
+            const roundNum = parseInt(roundMatch[1]);
+            const year = pickStr.includes('2027') ? 2027 : pickStr.includes('2028') ? 2028 : 2026;
+            const draftPick = { round: roundNum, year, fromTeam: option.targetTeam };
+            newAcquired.push(draftPick);
+            userPicks.push(draftPick);
+          }
         }
       });
       setAcquiredPicks(newAcquired);
