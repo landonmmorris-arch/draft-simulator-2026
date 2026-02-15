@@ -45,7 +45,7 @@ const NFLMockDraft = () => {
     'Detroit Lions', 'Minnesota Vikings', 'Carolina Panthers', 'Dallas Cowboys',
     'Pittsburgh Steelers', 'Los Angeles Chargers', 'Philadelphia Eagles', 'Cleveland Browns',
     'Chicago Bears', 'Buffalo Bills', 'San Francisco 49ers', 'Houston Texans',
-    'Los Angeles Rams', 'New England Patriots', 'Denver Broncos', 'Seattle Seahawks'
+    'Los Angeles Rams', 'Denver Broncos', 'New England Patriots', 'Seattle Seahawks'
   ];
 
   const teamNeeds = {
@@ -59,7 +59,7 @@ const NFLMockDraft = () => {
     'New Orleans Saints': ['QB', 'OT', 'EDGE', 'CB', 'WR'],
     'Kansas City Chiefs': ['EDGE', 'CB', 'DT', 'OT', 'WR'],
     'Cincinnati Bengals': ['OT', 'DT', 'EDGE', 'CB', 'RB'],
-    'Miami Dolphins': ['OT', 'EDGE', 'DT', 'LB', 'RB'],
+    'Miami Dolphins': ['OT', 'EDGE', 'DT', 'LB', 'CB'],
     'Dallas Cowboys': ['RB', 'DT', 'EDGE', 'S', 'OT'],
     'Los Angeles Rams': ['EDGE', 'OT', 'CB', 'LB', 'S'],
     'Baltimore Ravens': ['WR', 'EDGE', 'OT', 'CB', 'S'],
