@@ -811,20 +811,25 @@ const NFLMockDraft = () => {
     // Cap at 3 extra picks - bigger gaps just don't happen
     if (extraPicksNeeded <= 0 || extraPicksNeeded > 3) return null;
 
-    // Sometimes the buyer wants an additional pick from the seller (30% chance)
+    // Sometimes the buyer wants an additional pick from the seller (~40% chance)
     // This makes the trade more realistic - e.g. "I'll give you my 1st + 3rd,
     // but I also want your 4th rounder"
     let requestedPick: string | null = null;
-    if (Math.random() < 0.30 && extraPicksNeeded >= 1) {
-      // They want a mid-to-late round pick from the selling team
-      const requestableRound = currentRound + 3 + Math.floor(Math.random() * 2); // Ask for a pick 3-4 rounds later
+    if (Math.random() < 0.40 && extraPicksNeeded >= 1) {
+      const roundsLater = 2 + Math.floor(Math.random() * 2); // 2-3 rounds later
+      const requestableRound = currentRound + 1 + roundsLater;
+      const sellerPos = initialDraftOrder.indexOf(currentTeamName);
+
       if (requestableRound <= 7) {
-        const sellerPos = initialDraftOrder.indexOf(currentTeamName);
         const requestedPickNum = (requestableRound - 1) * 32 + (sellerPos !== -1 ? sellerPos : 16);
         requestedPick = formatPickDisplay(requestableRound, 2026, undefined, requestedPickNum);
-        // Since they're asking for a pick back, they give one more pick in return
-        extraPicksNeeded += 1;
+      } else {
+        // Ask for a future year pick
+        const futureYear = Math.random() < 0.7 ? 2027 : 2028;
+        requestedPick = `${futureYear} R${Math.min(roundsLater + 1, 5)}`;
       }
+      // Since they're asking for a pick back, they give one more pick in return
+      extraPicksNeeded += 1;
     }
 
     // Generate compensation picks - mix of current year and future years
@@ -832,16 +837,16 @@ const NFLMockDraft = () => {
     for (let i = 0; i < extraPicksNeeded; i++) {
       const futureRound = currentRound + 2 + i;
 
-      // Variety in compensation: sometimes use 2027/2028 picks instead of 2026
-      const useFutureYear = futureRound > rounds || Math.random() < 0.35;
+      // First pick usually current year, later picks mix in future years more
+      const useFutureYear = futureRound > rounds || (i > 0 && Math.random() < 0.55) || (i === 0 && Math.random() < 0.25);
 
       if (!useFutureYear && futureRound <= rounds) {
         const estimatedPickNum = (futureRound - 1) * 32 + buyerPickPosition;
         futurePicks.push(formatPickDisplay(futureRound, 2026, buyerTeam, estimatedPickNum));
       } else {
-        // Use 2027 picks most of the time, occasionally 2028
-        const futureYear = Math.random() < 0.8 ? 2027 : 2028;
-        const futureRoundNum = Math.min(currentRound + 1 + i, 7);
+        // 2027 or 2028 picks
+        const futureYear = Math.random() < 0.75 ? 2027 : 2028;
+        const futureRoundNum = Math.min(currentRound + 1 + i + 1, 7);
         futurePicks.push(formatPickDisplay(futureRoundNum, futureYear, buyerTeam));
       }
     }
@@ -1171,16 +1176,17 @@ const NFLMockDraft = () => {
       for (let j = 0; j < extraPicksReceived; j++) {
         const futureRound = currentRound + 1 + j;
 
-        // Mix of 2026 and future year picks for variety
-        const useFutureYear = futureRound >= 7 || Math.random() < 0.30;
+        // Mix of 2026 and future year picks - at least one should be from a different year
+        // First pick is usually current year, subsequent picks mix in future years
+        const useFutureYear = futureRound >= 7 || (j > 0 && Math.random() < 0.55) || (j === 0 && Math.random() < 0.25);
 
         if (!useFutureYear && futureRound < 7) {
           const estimatedPickNum = futureRound * 32 + (i);
           futurePicks.push(formatPickDisplay(futureRound + 1, 2026, undefined, estimatedPickNum, targetTeam));
         } else {
           // 2027 or occasionally 2028 picks
-          const futureYear = Math.random() < 0.8 ? 2027 : 2028;
-          const futureRoundNum = Math.min(currentRound + 1 + j, 7);
+          const futureYear = Math.random() < 0.75 ? 2027 : 2028;
+          const futureRoundNum = Math.min(currentRound + 1 + j + 1, 7);
           futurePicks.push(formatPickDisplay(futureRoundNum, futureYear, undefined, undefined, targetTeam));
         }
       }
@@ -1893,21 +1899,43 @@ const NFLMockDraft = () => {
           const selectedOffers = shuffled.slice(0, numOffers);
 
           // Convert the offers to the format expected by pendingTradeOffer
+          const currentRoundNum = Math.floor(currentPick / 32) + 1;
           const formattedOffers = selectedOffers.map(offer => {
-            // Sometimes the team trading up also wants one of your later picks (25% chance)
+            // Team trading up sometimes wants one of your later picks too (~40% in R1, ~50% in R2+)
+            // This is common in real NFL trades - e.g. "swap 1sts and you throw in a 4th"
             let requestedPick: string | null = null;
-            if (Math.random() < 0.25) {
-              const askRound = Math.floor(currentPick / 32) + 4 + Math.floor(Math.random() * 2); // 4-5 rounds later
+            const askChance = currentRoundNum === 1 ? 0.40 : 0.50;
+            if (Math.random() < askChance) {
+              // Ask for a pick 2-3 rounds later (or a future year pick)
+              const roundsLater = 2 + Math.floor(Math.random() * 2); // 2-3 rounds later
+              const askRound = currentRoundNum + roundsLater;
+              const userTeam = myTeams[0] || currentTeamNow;
+              const userPos = initialDraftOrder.indexOf(userTeam);
+
               if (askRound <= 7) {
-                const userTeam = myTeams[0] || currentTeamNow;
-                const userPos = initialDraftOrder.indexOf(userTeam);
+                // Ask for a 2026 pick in a later round
                 const askPickNum = (askRound - 1) * 32 + (userPos !== -1 ? userPos : 16);
                 requestedPick = formatPickDisplay(askRound, 2026, undefined, askPickNum);
-                // Give an extra pick in return
-                const bonusYear = Math.random() < 0.7 ? 2027 : 2028;
-                const bonusRound = Math.min(askRound - 1, 7);
-                offer.additionalPicks.push(formatPickDisplay(bonusRound, bonusYear, undefined, undefined, offer.targetTeam));
+              } else {
+                // Ask for a future year pick instead
+                const futureYear = Math.random() < 0.7 ? 2027 : 2028;
+                requestedPick = `${futureYear} R${Math.min(currentRoundNum + roundsLater - 1, 5)}`;
               }
+
+              // Give an extra pick in return to sweeten the deal
+              const bonusYear = Math.random() < 0.6 ? 2027 : 2028;
+              const bonusRound = Math.min(currentRoundNum + 1, 5);
+              offer.additionalPicks.push(formatPickDisplay(bonusRound, bonusYear, undefined, undefined, offer.targetTeam));
+            }
+
+            // Also ensure at least one future year pick in the compensation
+            // Replace one 2026 pick with a future year pick if all are 2026
+            const allCurrent = offer.additionalPicks.every((p: string) => p.includes('2026'));
+            if (allCurrent && offer.additionalPicks.length > 0 && Math.random() < 0.5) {
+              const replaceIdx = offer.additionalPicks.length - 1;
+              const futureYear = Math.random() < 0.75 ? 2027 : 2028;
+              const futureRound = Math.min(currentRoundNum + replaceIdx + 1, 6);
+              offer.additionalPicks[replaceIdx] = formatPickDisplay(futureRound, futureYear, undefined, undefined, offer.targetTeam);
             }
 
             return {
