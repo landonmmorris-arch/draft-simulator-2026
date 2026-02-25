@@ -2117,7 +2117,7 @@ const NFLMockDraft = () => {
 
   if (state === 'setup') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 p-6">
+      <div className="min-h-screen football-bg p-6">
         <div className="max-w-4xl mx-auto">
           <div className="bg-white/10 backdrop-blur-lg rounded-xl p-8 border border-white/20">
             <h1 className="text-4xl font-bold text-white mb-6">Draft Setup</h1>
@@ -2224,7 +2224,7 @@ const NFLMockDraft = () => {
 
   if (state === 'complete') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 p-6">
+      <div className="min-h-screen football-bg p-6">
         <div className="max-w-6xl mx-auto">
           <div className="bg-white/10 backdrop-blur-lg rounded-xl p-8 mb-6 border border-white/20">
             <div className="flex justify-between items-center">
@@ -2412,7 +2412,7 @@ const NFLMockDraft = () => {
   const currentNeeds = getTeamNeeds(currentTeam);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 p-6">
+    <div className="min-h-screen football-bg p-6">
       <div className="max-w-7xl mx-auto">
         {recentTrade && !recentTrade.forUser && (
           <div className="bg-orange-500/20 backdrop-blur-lg rounded-xl p-4 mb-4 border border-orange-500/50 animate-pulse">
