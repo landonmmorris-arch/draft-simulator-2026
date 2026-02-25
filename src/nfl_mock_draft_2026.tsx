@@ -2161,9 +2161,62 @@ const NFLMockDraft = () => {
     return { grade, score: finalScore, details: needsAddressed + '/' + Math.min(teamPicks.length, needs.length) + ' needs' };
   };
 
+  // 8-bit pixel art SVGs for combine characters
+  const pixelRunner = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='16' viewBox='0 0 12 16'%3E%3Crect x='4' y='0' width='4' height='4' fill='%23f4c587'/%3E%3Crect x='2' y='4' width='8' height='4' fill='%23ffffff'/%3E%3Crect x='4' y='4' width='4' height='4' fill='%23e53e3e'/%3E%3Crect x='2' y='8' width='3' height='4' fill='%23e53e3e'/%3E%3Crect x='7' y='8' width='3' height='4' fill='%23e53e3e'/%3E%3Crect x='2' y='12' width='3' height='4' fill='%232d3748'/%3E%3Crect x='7' y='12' width='3' height='4' fill='%232d3748'/%3E%3C/svg%3E";
+  const pixelRunner2 = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='16' viewBox='0 0 12 16'%3E%3Crect x='4' y='0' width='4' height='4' fill='%23f4c587'/%3E%3Crect x='2' y='4' width='8' height='4' fill='%23ffffff'/%3E%3Crect x='4' y='4' width='4' height='4' fill='%233182ce'/%3E%3Crect x='2' y='8' width='3' height='4' fill='%233182ce'/%3E%3Crect x='7' y='8' width='3' height='4' fill='%233182ce'/%3E%3Crect x='2' y='12' width='3' height='4' fill='%232d3748'/%3E%3Crect x='7' y='12' width='3' height='4' fill='%232d3748'/%3E%3C/svg%3E";
+  const pixelRunner3 = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='16' viewBox='0 0 12 16'%3E%3Crect x='4' y='0' width='4' height='4' fill='%23d2a679'/%3E%3Crect x='2' y='4' width='8' height='4' fill='%23ffffff'/%3E%3Crect x='4' y='4' width='4' height='4' fill='%23805ad5'/%3E%3Crect x='2' y='8' width='3' height='4' fill='%23805ad5'/%3E%3Crect x='7' y='8' width='3' height='4' fill='%23805ad5'/%3E%3Crect x='2' y='12' width='3' height='4' fill='%232d3748'/%3E%3Crect x='7' y='12' width='3' height='4' fill='%232d3748'/%3E%3C/svg%3E";
+  const pixelCoach = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='16' viewBox='0 0 12 16'%3E%3Crect x='3' y='0' width='6' height='2' fill='%232d3748'/%3E%3Crect x='4' y='2' width='4' height='3' fill='%23f4c587'/%3E%3Crect x='2' y='5' width='8' height='5' fill='%232d3748'/%3E%3Crect x='0' y='6' width='2' height='3' fill='%23f4c587'/%3E%3Crect x='10' y='6' width='2' height='3' fill='%23f4c587'/%3E%3Crect x='3' y='10' width='3' height='6' fill='%232d3748'/%3E%3Crect x='6' y='10' width='3' height='6' fill='%232d3748'/%3E%3C/svg%3E";
+  const pixelJumper = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='16' viewBox='0 0 12 16'%3E%3Crect x='4' y='0' width='4' height='4' fill='%23d2a679'/%3E%3Crect x='2' y='4' width='8' height='4' fill='%23ffffff'/%3E%3Crect x='4' y='4' width='4' height='4' fill='%23dd6b20'/%3E%3Crect x='0' y='5' width='2' height='2' fill='%23f4c587'/%3E%3Crect x='10' y='5' width='2' height='2' fill='%23f4c587'/%3E%3Crect x='2' y='8' width='3' height='4' fill='%23dd6b20'/%3E%3Crect x='7' y='8' width='3' height='4' fill='%23dd6b20'/%3E%3Crect x='2' y='12' width='3' height='4' fill='%232d3748'/%3E%3Crect x='7' y='12' width='3' height='4' fill='%232d3748'/%3E%3C/svg%3E";
+
+  const combineOverlay = (
+    <div className="combine-overlay">
+      {/* 40-yard dash runners */}
+      <img src={pixelRunner} className="pixel-player runner-1" alt="" />
+      <img src={pixelRunner2} className="pixel-player runner-2" alt="" />
+      <img src={pixelRunner3} className="pixel-player runner-3" alt="" />
+      <img src={pixelRunner} className="pixel-player runner-4" alt="" />
+      <img src={pixelRunner2} className="pixel-player runner-5" alt="" />
+      {/* Shuttle run */}
+      <img src={pixelRunner3} className="pixel-player shuttle-1" alt="" />
+      <img src={pixelRunner} className="pixel-player shuttle-2" alt="" />
+      {/* Vertical jump */}
+      <img src={pixelJumper} className="pixel-player jumper-1" alt="" />
+      <img src={pixelJumper} className="pixel-player jumper-2" alt="" />
+      {/* Bench press */}
+      <img src={pixelRunner2} className="pixel-player bench-1" alt="" />
+      {/* Cone drills */}
+      <img src={pixelRunner} className="pixel-player cone-drill-1" alt="" />
+      <img src={pixelRunner3} className="pixel-player cone-drill-2" alt="" />
+      {/* Catching drill */}
+      <img src={pixelRunner2} className="pixel-player catcher-1" alt="" />
+      <div className="pixel-football football-throw-1" />
+      {/* Coaches watching */}
+      <img src={pixelCoach} className="pixel-player coach-1" alt="" />
+      <img src={pixelCoach} className="pixel-player coach-2" alt="" />
+      {/* Cones for drills */}
+      <div className="pixel-cone" style={{top: '37%', left: '55%'}} />
+      <div className="pixel-cone" style={{top: '34%', left: '57%'}} />
+      <div className="pixel-cone" style={{top: '31%', left: '55%'}} />
+      <div className="pixel-cone" style={{top: '34%', left: '53%'}} />
+      <div className="pixel-cone" style={{top: '84%', left: '35%'}} />
+      <div className="pixel-cone" style={{top: '81%', left: '37%'}} />
+      <div className="pixel-cone" style={{top: '78%', left: '35%'}} />
+      <div className="pixel-cone" style={{top: '81%', left: '33%'}} />
+    </div>
+  );
+
+  // Team logo watermark when single team selected
+  const teamLogoWatermark = myTeams.length === 1 && teamLogos[myTeams[0]] ? (
+    <div className="fixed inset-0 pointer-events-none z-0 flex items-center justify-center">
+      <img src={teamLogos[myTeams[0]]} alt="" className="w-64 h-64 opacity-15" />
+    </div>
+  ) : null;
+
   if (state === 'setup') {
     return (
       <div className={`min-h-screen p-6 ${singleTeamBgStyle ? '' : 'football-bg'}`} style={singleTeamBgStyle}>
+        {combineOverlay}
+        {teamLogoWatermark}
         <div className="max-w-4xl mx-auto">
           <div className="bg-white/10 backdrop-blur-lg rounded-xl p-8 border border-white/20">
             <div className="flex items-center justify-center gap-4 mb-6">
@@ -2275,6 +2328,8 @@ const NFLMockDraft = () => {
   if (state === 'complete') {
     return (
       <div className={`min-h-screen p-6 ${singleTeamBgStyle ? '' : 'football-bg'}`} style={singleTeamBgStyle}>
+        {combineOverlay}
+        {teamLogoWatermark}
         <div className="max-w-6xl mx-auto">
           <div className="bg-white/10 backdrop-blur-lg rounded-xl p-8 mb-6 border border-white/20">
             <div className="flex justify-between items-center">
@@ -2463,6 +2518,8 @@ const NFLMockDraft = () => {
 
   return (
     <div className={`min-h-screen p-6 ${singleTeamBgStyle ? '' : 'football-bg'}`} style={singleTeamBgStyle}>
+      {combineOverlay}
+      {teamLogoWatermark}
       <div className="max-w-7xl mx-auto">
         {recentTrade && !recentTrade.forUser && (
           <div className="bg-orange-500/20 backdrop-blur-lg rounded-xl p-4 mb-4 border border-orange-500/50 animate-pulse">
