@@ -650,6 +650,7 @@ const NFLMockDraft = () => {
   const [speed, setSpeed] = useState('fast');
   const [myTeams, setMyTeams] = useState<string[]>([]);
   const [selectAll, setSelectAll] = useState(false);
+  const [showAesthetics, setShowAesthetics] = useState(true);
   const [pick, setPick] = useState(0);
   const [picks, setPicks] = useState<any[]>([]);
   const [available, setAvailable] = useState(generateProspects());
@@ -2290,11 +2291,22 @@ const NFLMockDraft = () => {
     </>
   ) : null;
 
+  const aestheticsToggle = (
+    <button
+      onClick={() => setShowAesthetics(!showAesthetics)}
+      className="fixed bottom-3 left-3 z-50 bg-black/40 hover:bg-black/60 text-white/70 hover:text-white text-xs px-2 py-1 rounded-full backdrop-blur-sm border border-white/20 transition-all"
+      title={showAesthetics ? 'Hide effects' : 'Show effects'}
+    >
+      {showAesthetics ? 'FX ON' : 'FX OFF'}
+    </button>
+  );
+
   if (state === 'setup') {
     return (
-      <div className={`min-h-screen p-6 ${singleTeamBgStyle ? '' : 'football-bg'}`} style={singleTeamBgStyle}>
-        {combineOverlay}
-        {teamLogoWatermark}
+      <div className={`min-h-screen p-6 ${showAesthetics && singleTeamBgStyle ? '' : 'football-bg'}`} style={showAesthetics ? singleTeamBgStyle : undefined}>
+        {showAesthetics && combineOverlay}
+        {showAesthetics && teamLogoWatermark}
+        {aestheticsToggle}
         <div className="max-w-4xl mx-auto">
           <div className="bg-white/10 backdrop-blur-lg rounded-xl p-8 border border-white/20">
             <div className="flex items-center justify-center gap-4 mb-6">
@@ -2405,9 +2417,10 @@ const NFLMockDraft = () => {
 
   if (state === 'complete') {
     return (
-      <div className={`min-h-screen p-6 ${singleTeamBgStyle ? '' : 'football-bg'}`} style={singleTeamBgStyle}>
-        {combineOverlay}
-        {teamLogoWatermark}
+      <div className={`min-h-screen p-6 ${showAesthetics && singleTeamBgStyle ? '' : 'football-bg'}`} style={showAesthetics ? singleTeamBgStyle : undefined}>
+        {showAesthetics && combineOverlay}
+        {showAesthetics && teamLogoWatermark}
+        {aestheticsToggle}
         <div className="max-w-6xl mx-auto">
           <div className="bg-white/10 backdrop-blur-lg rounded-xl p-8 mb-6 border border-white/20">
             <div className="flex justify-between items-center">
@@ -2595,9 +2608,10 @@ const NFLMockDraft = () => {
   const currentNeeds = getTeamNeeds(currentTeam);
 
   return (
-    <div className={`min-h-screen p-6 ${singleTeamBgStyle ? '' : 'football-bg'}`} style={singleTeamBgStyle}>
-      {combineOverlay}
-      {teamLogoWatermark}
+    <div className={`min-h-screen p-6 ${showAesthetics && singleTeamBgStyle ? '' : 'football-bg'}`} style={showAesthetics ? singleTeamBgStyle : undefined}>
+      {showAesthetics && combineOverlay}
+      {showAesthetics && teamLogoWatermark}
+      {aestheticsToggle}
       <div className="max-w-7xl mx-auto">
         {recentTrade && !recentTrade.forUser && (
           <div className="bg-orange-500/20 backdrop-blur-lg rounded-xl p-4 mb-4 border border-orange-500/50 animate-pulse">
