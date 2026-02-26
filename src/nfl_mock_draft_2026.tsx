@@ -2198,6 +2198,72 @@ const NFLMockDraft = () => {
   // Jumper: arms up version, combine shirt
   const pixelJumper = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='18' viewBox='0 0 14 18'%3E%3Crect x='5' y='0' width='4' height='4' fill='%23c68642'/%3E%3Crect x='2' y='4' width='10' height='5' fill='%23e8e8e8'/%3E%3Crect x='5' y='5' width='4' height='2' fill='%23013369'/%3E%3Crect x='0' y='2' width='2' height='3' fill='%23c68642'/%3E%3Crect x='12' y='2' width='2' height='3' fill='%23c68642'/%3E%3Crect x='3' y='9' width='3' height='5' fill='%232d2d2d'/%3E%3Crect x='8' y='9' width='3' height='5' fill='%232d2d2d'/%3E%3Crect x='3' y='14' width='3' height='4' fill='%23c68642'/%3E%3Crect x='8' y='14' width='3' height='4' fill='%23c68642'/%3E%3C/svg%3E";
 
+  // NFL Combine leaderboard data (real combine performances)
+  const combineEvents = ['40-YD DASH', 'BENCH PRESS', 'VERT JUMP', 'BROAD JUMP', '3-CONE DRILL', '20-YD SHUTTLE'] as const;
+  const [combineEvent, setCombineEvent] = useState(0);
+  const combineData: { [key: string]: { name: string; pos: string; school: string; result: string }[] } = {
+    '40-YD DASH': [
+      { name: 'Xavier Worthy', pos: 'WR', school: 'Texas', result: '4.21s' },
+      { name: 'Rome Odunze', pos: 'WR', school: 'Washington', result: '4.45s' },
+      { name: 'Bucky Irving', pos: 'RB', school: 'Oregon', result: '4.34s' },
+      { name: 'Ladd McConkey', pos: 'WR', school: 'Georgia', result: '4.39s' },
+      { name: 'Marvin Harrison Jr.', pos: 'WR', school: 'Ohio State', result: '4.33s' },
+      { name: 'Keon Coleman', pos: 'WR', school: 'Florida State', result: '4.41s' },
+      { name: 'Bo Nix', pos: 'QB', school: 'Oregon', result: '4.58s' },
+      { name: 'Terrion Arnold', pos: 'CB', school: 'Alabama', result: '4.33s' },
+    ],
+    'BENCH PRESS': [
+      { name: 'Jordan Morgan', pos: 'OT', school: 'Arizona', result: '35 reps' },
+      { name: 'Tyler Guyton', pos: 'OT', school: 'Oklahoma', result: '32 reps' },
+      { name: 'Zach Frazier', pos: 'C', school: 'West Virginia', result: '31 reps' },
+      { name: 'Braden Fiske', pos: 'DT', school: 'Florida State', result: '30 reps' },
+      { name: 'T\'Vondre Sweat', pos: 'DT', school: 'Texas', result: '28 reps' },
+      { name: 'Adonai Mitchell', pos: 'WR', school: 'Texas', result: '21 reps' },
+      { name: 'Dallas Turner', pos: 'EDGE', school: 'Alabama', result: '24 reps' },
+      { name: 'Laiatu Latu', pos: 'EDGE', school: 'UCLA', result: '25 reps' },
+    ],
+    'VERT JUMP': [
+      { name: 'Xavier Worthy', pos: 'WR', school: 'Texas', result: '43.5"' },
+      { name: 'Quinyon Mitchell', pos: 'CB', school: 'Toledo', result: '41.5"' },
+      { name: 'Terrion Arnold', pos: 'CB', school: 'Alabama', result: '40.0"' },
+      { name: 'Bucky Irving', pos: 'RB', school: 'Oregon', result: '39.5"' },
+      { name: 'Brian Thomas Jr.', pos: 'WR', school: 'LSU', result: '39.0"' },
+      { name: 'Malik Nabers', pos: 'WR', school: 'LSU', result: '38.5"' },
+      { name: 'Jared Verse', pos: 'EDGE', school: 'Florida State', result: '36.0"' },
+      { name: 'Caleb Williams', pos: 'QB', school: 'USC', result: '34.5"' },
+    ],
+    'BROAD JUMP': [
+      { name: 'Xavier Worthy', pos: 'WR', school: 'Texas', result: '11\'3"' },
+      { name: 'Quinyon Mitchell', pos: 'CB', school: 'Toledo', result: '11\'0"' },
+      { name: 'Bucky Irving', pos: 'RB', school: 'Oregon', result: '10\'10"' },
+      { name: 'Terrion Arnold', pos: 'CB', school: 'Alabama', result: '10\'9"' },
+      { name: 'Kool-Aid McKinstry', pos: 'CB', school: 'Alabama', result: '10\'7"' },
+      { name: 'Brian Thomas Jr.', pos: 'WR', school: 'LSU', result: '10\'5"' },
+      { name: 'Rome Odunze', pos: 'WR', school: 'Washington', result: '10\'4"' },
+      { name: 'Ladd McConkey', pos: 'WR', school: 'Georgia', result: '10\'3"' },
+    ],
+    '3-CONE DRILL': [
+      { name: 'Ladd McConkey', pos: 'WR', school: 'Georgia', result: '6.68s' },
+      { name: 'Quinyon Mitchell', pos: 'CB', school: 'Toledo', result: '6.72s' },
+      { name: 'Rome Odunze', pos: 'WR', school: 'Washington', result: '6.78s' },
+      { name: 'Bucky Irving', pos: 'RB', school: 'Oregon', result: '6.80s' },
+      { name: 'Malik Nabers', pos: 'WR', school: 'LSU', result: '6.82s' },
+      { name: 'Cooper DeJean', pos: 'CB', school: 'Iowa', result: '6.85s' },
+      { name: 'Keon Coleman', pos: 'WR', school: 'Florida State', result: '6.90s' },
+      { name: 'Adonai Mitchell', pos: 'WR', school: 'Texas', result: '6.95s' },
+    ],
+    '20-YD SHUTTLE': [
+      { name: 'Quinyon Mitchell', pos: 'CB', school: 'Toledo', result: '3.98s' },
+      { name: 'Ladd McConkey', pos: 'WR', school: 'Georgia', result: '4.01s' },
+      { name: 'Bucky Irving', pos: 'RB', school: 'Oregon', result: '4.05s' },
+      { name: 'Cooper DeJean', pos: 'CB', school: 'Iowa', result: '4.08s' },
+      { name: 'Rome Odunze', pos: 'WR', school: 'Washington', result: '4.10s' },
+      { name: 'Xavier Worthy', pos: 'WR', school: 'Texas', result: '4.12s' },
+      { name: 'Brian Thomas Jr.', pos: 'WR', school: 'LSU', result: '4.15s' },
+      { name: 'Terrion Arnold', pos: 'CB', school: 'Alabama', result: '4.18s' },
+    ],
+  };
+
   const combineOverlay = (
     <div className="combine-overlay">
       {/* Banner */}
@@ -2206,6 +2272,7 @@ const NFLMockDraft = () => {
       {/* === 40-YARD DASH === */}
       <div className="station-area dash-station" />
       <span className="station-label dash-label">40-YD DASH</span>
+      <div className="station-timer dash-timer">4.33</div>
       <div className="dash-start-line" />
       <div className="dash-finish-line" />
       <span className="dash-start-text">START</span>
@@ -2217,6 +2284,7 @@ const NFLMockDraft = () => {
       {/* === VERTICAL JUMP === */}
       <div className="station-area jump-station" />
       <span className="station-label jump-label">VERT JUMP</span>
+      <div className="station-timer jump-timer">41.5"</div>
       <div className="jump-pole" />
       <div className="jump-vane" style={{top: '9%'}} />
       <div className="jump-vane" style={{top: '11%'}} />
@@ -2230,6 +2298,7 @@ const NFLMockDraft = () => {
       {/* === BENCH PRESS === */}
       <div className="station-area bench-station" />
       <span className="station-label bench-label">225 LB BENCH</span>
+      <div className="station-timer bench-timer">28 REPS</div>
       <div className="bench-rack" style={{top: '40%', left: '7%'}} />
       <div className="weight-plate" style={{top: '37%', left: '6%'}} />
       <div className="weight-plate" style={{top: '37%', left: 'calc(7% + 33px)'}} />
@@ -2243,6 +2312,7 @@ const NFLMockDraft = () => {
       {/* === 3-CONE DRILL === */}
       <div className="station-area cone-station" />
       <span className="station-label cone-label">3-CONE DRILL</span>
+      <div className="station-timer cone-timer">6.72</div>
       <div className="pixel-cone" style={{top: '42%', right: '12%'}} />
       <div className="pixel-cone" style={{top: '37%', right: '9%'}} />
       <div className="pixel-cone" style={{top: '32%', right: '12%'}} />
@@ -2255,6 +2325,7 @@ const NFLMockDraft = () => {
       {/* === BROAD JUMP === */}
       <div className="station-area broad-station" />
       <span className="station-label broad-label">BROAD JUMP</span>
+      <div className="station-timer broad-timer">10'9"</div>
       <div className="broad-line" style={{bottom: '24%'}} />
       <div className="broad-line" style={{bottom: '27%'}} />
       <div className="broad-line" style={{bottom: '30%'}} />
@@ -2264,6 +2335,7 @@ const NFLMockDraft = () => {
       {/* === 20-YARD SHUTTLE === */}
       <div className="station-area shuttle-station" />
       <span className="station-label shuttle-label">20-YD SHUTTLE</span>
+      <div className="station-timer shuttle-timer">4.05</div>
       <div className="shuttle-marker" style={{left: '40%'}} />
       <div className="shuttle-marker" style={{left: '58%'}} />
       <img src={pixelRunner} className="pixel-player shuttle-1" alt="" />
@@ -2278,6 +2350,13 @@ const NFLMockDraft = () => {
       <img src={pixelRunner3} className="pixel-player catcher-2" alt="" />
       <div className="pixel-football football-throw-1" />
       <div className="pixel-football football-throw-2" />
+
+      {/* === SCORE SHEETS near coaches === */}
+      <div className="score-sheet" style={{top: '54%', left: '5%'}} />
+      <div className="score-sheet" style={{top: '54%', right: '5%'}} />
+      <div className="score-sheet" style={{bottom: '7%', left: '22%'}} />
+      <div className="score-sheet" style={{bottom: '7%', right: '22%'}} />
+      <div className="score-sheet" style={{top: '27%', left: '32%'}} />
 
       {/* === COACHES / SCOUTS watching === */}
       <img src={pixelCoach} className="pixel-player coach-1" alt="" />
@@ -2306,11 +2385,55 @@ const NFLMockDraft = () => {
   );
 
   if (fieldMode) {
+    const currentEventData = combineData[combineEvents[combineEvent]];
     return (
       <>
         {aestheticsToggle}
         <div className="min-h-screen football-bg">
-          {showAesthetics && combineOverlay}
+          {combineOverlay}
+          {/* Combine Leaderboard */}
+          <div className="fixed top-4 right-4 w-80 pointer-events-auto" style={{zIndex: 10}}>
+            <div className="bg-black/80 backdrop-blur-md rounded-xl border-2 border-blue-800 overflow-hidden shadow-2xl">
+              <div className="bg-gradient-to-r from-blue-900 to-blue-800 px-4 py-3 flex items-center gap-2">
+                <img src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/nfl.png&w=40&h=40" alt="NFL" className="w-8 h-8" />
+                <div>
+                  <div className="text-white font-bold text-sm tracking-wider">NFL COMBINE</div>
+                  <div className="text-blue-300 text-xs">LEADERBOARD</div>
+                </div>
+              </div>
+              {/* Event tabs */}
+              <div className="flex flex-wrap gap-1 px-2 py-2 bg-black/50 border-b border-blue-800/50">
+                {combineEvents.map((evt, i) => (
+                  <button
+                    key={evt}
+                    onClick={() => setCombineEvent(i)}
+                    className={`text-xs px-2 py-1 rounded font-bold transition-all ${
+                      i === combineEvent
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-white/10 text-white/60 hover:bg-white/20 hover:text-white'
+                    }`}
+                  >
+                    {evt}
+                  </button>
+                ))}
+              </div>
+              {/* Results */}
+              <div className="divide-y divide-white/10">
+                {currentEventData.map((p, i) => (
+                  <div key={p.name} className={`flex items-center px-3 py-2 ${i === 0 ? 'bg-yellow-500/10' : i === 1 ? 'bg-gray-400/5' : i === 2 ? 'bg-orange-700/5' : ''}`}>
+                    <span className={`w-6 text-center font-bold text-sm ${i === 0 ? 'text-yellow-400' : i === 1 ? 'text-gray-300' : i === 2 ? 'text-orange-400' : 'text-white/40'}`}>
+                      {i + 1}
+                    </span>
+                    <div className="flex-1 ml-2">
+                      <div className="text-white text-sm font-semibold">{p.name}</div>
+                      <div className="text-white/40 text-xs">{p.pos} - {p.school}</div>
+                    </div>
+                    <span className="text-green-400 font-mono font-bold text-sm">{p.result}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </>
     );
@@ -2320,7 +2443,7 @@ const NFLMockDraft = () => {
     return (
       <>
         {aestheticsToggle}
-        <div className={`min-h-screen p-6 ${showAesthetics && singleTeamBgStyle ? '' : 'football-bg'}`} style={showAesthetics ? singleTeamBgStyle : undefined}>
+        <div className="min-h-screen p-6 football-bg">
           {showAesthetics && combineOverlay}
           {showAesthetics && teamLogoWatermark}
           <div className="max-w-4xl mx-auto">
@@ -2436,7 +2559,7 @@ const NFLMockDraft = () => {
     return (
       <>
         {aestheticsToggle}
-        <div className={`min-h-screen p-6 ${showAesthetics && singleTeamBgStyle ? '' : 'football-bg'}`} style={showAesthetics ? singleTeamBgStyle : undefined}>
+        <div className="min-h-screen p-6 football-bg">
           {showAesthetics && combineOverlay}
           {showAesthetics && teamLogoWatermark}
           <div className="max-w-6xl mx-auto">
@@ -2629,7 +2752,7 @@ const NFLMockDraft = () => {
   return (
     <>
       {aestheticsToggle}
-      <div className={`min-h-screen p-6 ${showAesthetics && singleTeamBgStyle ? '' : 'football-bg'}`} style={showAesthetics ? singleTeamBgStyle : undefined}>
+      <div className="min-h-screen p-6 football-bg">
         {showAesthetics && combineOverlay}
         {showAesthetics && teamLogoWatermark}
         <div className="max-w-7xl mx-auto">

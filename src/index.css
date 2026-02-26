@@ -336,3 +336,55 @@
   25% { transform: rotate(3deg); }
   75% { transform: rotate(-3deg); }
 }
+
+/* ====== STATION TIMERS / SCOREBOARDS ====== */
+.station-timer {
+  position: absolute;
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+  font-weight: bold;
+  color: #ff3333;
+  background: rgba(0,0,0,0.85);
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 2px solid rgba(255,50,50,0.5);
+  text-shadow: 0 0 8px rgba(255,50,50,0.6);
+  animation: timer-blink 2s ease-in-out infinite;
+  letter-spacing: 2px;
+}
+
+@keyframes timer-blink {
+  0%, 100% { opacity: 0.9; }
+  50% { opacity: 1; text-shadow: 0 0 12px rgba(255,50,50,0.8); }
+}
+
+.dash-timer { top: 22%; left: 25%; }
+.jump-timer { top: 22%; right: 8%; }
+.bench-timer { top: 47%; left: 10%; }
+.cone-timer { top: 47%; right: 10%; }
+.broad-timer { bottom: 18%; left: 14%; }
+.shuttle-timer { bottom: 18%; left: 48%; }
+
+/* ====== SCORE SHEETS at stations ====== */
+.score-sheet {
+  position: absolute;
+  width: 20px;
+  height: 26px;
+  background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 1px;
+}
+.score-sheet::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 3px;
+  right: 3px;
+  height: 1px;
+  background: rgba(0,0,0,0.15);
+  box-shadow:
+    0 4px 0 rgba(0,0,0,0.15),
+    0 8px 0 rgba(0,0,0,0.15),
+    0 12px 0 rgba(0,0,0,0.15),
+    0 16px 0 rgba(0,0,0,0.15);
+}
