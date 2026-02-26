@@ -43,7 +43,7 @@ const NFLMockDraft = () => {
     'Arizona Cardinals': ['#97233f', '#000000'],
     'Tennessee Titans': ['#0c2340', '#4b92db'],
     'New York Giants': ['#0b2265', '#a71930'],
-    'Cleveland Browns': ['#311d00', '#ff3c00'],
+    'Cleveland Browns': ['#ff3c00', '#311d00'],
     'Washington Commanders': ['#5a1414', '#ffb612'],
     'New Orleans Saints': ['#d3bc8d', '#101820'],
     'Kansas City Chiefs': ['#e31837', '#ffb81c'],
@@ -84,34 +84,38 @@ const NFLMockDraft = () => {
   ];
 
   const teamNeeds = {
-    'Las Vegas Raiders': ['QB', 'EDGE', 'OT', 'WR', 'CB'],
-    'New York Jets': ['QB', 'OT', 'EDGE', 'WR', 'S'],
-    'Arizona Cardinals': ['QB', 'EDGE', 'OT', 'CB', 'LB'],
-    'Tennessee Titans': ['QB', 'WR', 'OT', 'EDGE', 'CB'],
-    'New York Giants': ['QB', 'EDGE', 'OT', 'WR', 'CB'],
-    'Cleveland Browns': ['QB', 'WR', 'OT', 'OG', 'S'],
-    'Washington Commanders': ['EDGE', 'CB', 'DT', 'WR', 'OT'],
-    'New Orleans Saints': ['QB', 'OT', 'EDGE', 'CB', 'WR'],
-    'Kansas City Chiefs': ['EDGE', 'CB', 'DT', 'OT', 'WR'],
-    'Cincinnati Bengals': ['OT', 'DT', 'EDGE', 'CB', 'RB'],
-    'Miami Dolphins': ['OT', 'EDGE', 'DT', 'LB', 'CB'],
-    'Dallas Cowboys': ['RB', 'DT', 'EDGE', 'S', 'OT'],
-    'Los Angeles Rams': ['EDGE', 'OT', 'CB', 'LB', 'S'],
-    'Baltimore Ravens': ['WR', 'EDGE', 'OT', 'CB', 'S'],
-    'Tampa Bay Buccaneers': ['OT', 'EDGE', 'QB', 'DT', 'WR'],
-    'Detroit Lions': ['EDGE', 'CB', 'DT', 'S', 'LB'],
-    'Minnesota Vikings': ['CB', 'EDGE', 'OT', 'DT', 'S'],
-    'Carolina Panthers': ['QB', 'EDGE', 'OT', 'WR', 'CB'],
-    'Pittsburgh Steelers': ['QB', 'OT', 'CB', 'EDGE', 'WR'],
-    'Los Angeles Chargers': ['OT', 'DT', 'EDGE', 'WR', 'LB'],
-    'Philadelphia Eagles': ['EDGE', 'CB', 'LB', 'S', 'WR'],
-    'Chicago Bears': ['OT', 'EDGE', 'DT', 'CB', 'S'],
-    'Buffalo Bills': ['WR', 'EDGE', 'DT', 'OT', 'RB'],
-    'San Francisco 49ers': ['OT', 'EDGE', 'CB', 'DT', 'S'],
-    'Houston Texans': ['EDGE', 'CB', 'OT', 'DT', 'WR'],
-    'New England Patriots': ['WR', 'EDGE', 'OT', 'LB', 'DT'],
-    'Denver Broncos': ['EDGE', 'OT', 'CB', 'DT', 'WR'],
-    'Seattle Seahawks': ['OT', 'EDGE', 'DT', 'LB', 'CB']
+    'Las Vegas Raiders': ['QB', 'WR', 'OG', 'EDGE', 'CB'],
+    'New York Jets': ['QB', 'WR', 'DT', 'CB', 'LB'],
+    'Arizona Cardinals': ['QB', 'OT', 'OG', 'RB', 'EDGE'],
+    'Tennessee Titans': ['WR', 'EDGE', 'CB', 'RB', 'OG'],
+    'New York Giants': ['WR', 'OG', 'OT', 'CB', 'S'],
+    'Cleveland Browns': ['QB', 'WR', 'OG', 'OT', 'DT'],
+    'Washington Commanders': ['EDGE', 'TE', 'OG', 'LB', 'CB'],
+    'New Orleans Saints': ['WR', 'EDGE', 'OG', 'DT', 'OT'],
+    'Kansas City Chiefs': ['RB', 'WR', 'OG', 'OT', 'CB'],
+    'Cincinnati Bengals': ['OG', 'C', 'DT', 'EDGE', 'S'],
+    'Miami Dolphins': ['QB', 'WR', 'OG', 'CB', 'OT'],
+    'Dallas Cowboys': ['RB', 'EDGE', 'LB', 'S', 'CB'],
+    'Los Angeles Rams': ['QB', 'OT', 'CB', 'S', 'WR'],
+    'Baltimore Ravens': ['WR', 'EDGE', 'OG', 'DT', 'S'],
+    'Tampa Bay Buccaneers': ['TE', 'EDGE', 'OG', 'LB', 'CB'],
+    'Detroit Lions': ['EDGE', 'C', 'OT', 'CB', 'OG'],
+    'Minnesota Vikings': ['S', 'CB', 'RB', 'OT', 'C'],
+    'Carolina Panthers': ['OT', 'EDGE', 'LB', 'WR', 'S'],
+    'Pittsburgh Steelers': ['QB', 'WR', 'OT', 'CB', 'EDGE'],
+    'Los Angeles Chargers': ['OG', 'C', 'DT', 'OT', 'EDGE'],
+    'Philadelphia Eagles': ['EDGE', 'TE', 'OG', 'CB', 'S'],
+    'Chicago Bears': ['DT', 'S', 'LB', 'OT', 'OG'],
+    'Buffalo Bills': ['WR', 'EDGE', 'CB', 'LB', 'OT'],
+    'San Francisco 49ers': ['WR', 'OG', 'EDGE', 'S', 'OT'],
+    'Houston Texans': ['RB', 'OG', 'C', 'DT', 'S'],
+    'New England Patriots': ['OG', 'OT', 'EDGE', 'LB', 'CB'],
+    'Denver Broncos': ['RB', 'TE', 'LB', 'C', 'DT'],
+    'Seattle Seahawks': ['RB', 'OG', 'C', 'CB', 'LB'],
+    'Atlanta Falcons': ['DT', 'WR', 'CB', 'LB', 'EDGE'],
+    'Green Bay Packers': ['OT', 'DT', 'CB', 'EDGE', 'S'],
+    'Indianapolis Colts': ['QB', 'DT', 'EDGE', 'LB', 'S'],
+    'Jacksonville Jaguars': ['C', 'OG', 'CB', 'DT', 'S'],
   };
 
   // Team draft picks for 2026-2028 (based on current trades)
@@ -2170,45 +2174,73 @@ const NFLMockDraft = () => {
 
   const combineOverlay = (
     <div className="combine-overlay">
-      {/* 40-yard dash runners */}
+      {/* === 40-YARD DASH STATION === */}
+      <div className="station-area dash-station" />
+      <span className="station-label dash-label">40-YD DASH</span>
+      <div className="dash-start-line" />
+      <div className="dash-finish-line" />
       <img src={pixelRunner} className="pixel-player runner-1" alt="" />
       <img src={pixelRunner2} className="pixel-player runner-2" alt="" />
       <img src={pixelRunner3} className="pixel-player runner-3" alt="" />
-      <img src={pixelRunner} className="pixel-player runner-4" alt="" />
-      <img src={pixelRunner2} className="pixel-player runner-5" alt="" />
-      {/* Shuttle run */}
-      <img src={pixelRunner3} className="pixel-player shuttle-1" alt="" />
-      <img src={pixelRunner} className="pixel-player shuttle-2" alt="" />
-      {/* Vertical jump */}
+
+      {/* === VERTICAL JUMP STATION === */}
+      <div className="station-area jump-station" />
+      <span className="station-label jump-label">VERT JUMP</span>
+      <div className="jump-pole" />
       <img src={pixelJumper} className="pixel-player jumper-1" alt="" />
       <img src={pixelJumper} className="pixel-player jumper-2" alt="" />
-      {/* Bench press */}
+
+      {/* === BENCH PRESS STATION === */}
+      <div className="station-area bench-station" />
+      <span className="station-label bench-label">BENCH PRESS</span>
+      <div className="bench-rack" />
+      <div className="weight-plate weight-left" />
+      <div className="weight-plate weight-right" />
       <img src={pixelRunner2} className="pixel-player bench-1" alt="" />
-      {/* Cone drills */}
-      <img src={pixelRunner} className="pixel-player cone-drill-1" alt="" />
-      <img src={pixelRunner3} className="pixel-player cone-drill-2" alt="" />
-      {/* Catching drill */}
+      <img src={pixelRunner} className="pixel-player bench-2" alt="" />
+
+      {/* === 3-CONE DRILL STATION === */}
+      <div className="station-area cone-station" />
+      <span className="station-label cone-label">3-CONE DRILL</span>
+      <img src={pixelRunner3} className="pixel-player cone-drill-1" alt="" />
+      <div className="pixel-cone" style={{top: '38%', right: '14%'}} />
+      <div className="pixel-cone" style={{top: '34%', right: '11%'}} />
+      <div className="pixel-cone" style={{top: '30%', right: '14%'}} />
+
+      {/* === BROAD JUMP STATION === */}
+      <div className="station-area broad-station" />
+      <span className="station-label broad-label">BROAD JUMP</span>
+      <div className="broad-line" style={{bottom: '26%'}} />
+      <div className="broad-line" style={{bottom: '28%'}} />
+      <div className="broad-line" style={{bottom: '30%'}} />
+      <img src={pixelJumper} className="pixel-player broad-jumper-1" alt="" />
+
+      {/* === 20-YARD SHUTTLE STATION === */}
+      <div className="station-area shuttle-station" />
+      <span className="station-label shuttle-label">20-YD SHUTTLE</span>
+      <div className="shuttle-marker" style={{left: '42%'}} />
+      <div className="shuttle-marker" style={{left: '56%'}} />
+      <img src={pixelRunner} className="pixel-player shuttle-1" alt="" />
+      <img src={pixelRunner2} className="pixel-player shuttle-2" alt="" />
+
+      {/* === RECEIVING / ROUTE RUNNING STATION === */}
+      <div className="station-area catch-station" />
+      <span className="station-label catch-label">PASS CATCHING</span>
+      <img src={pixelCoach} className="pixel-player thrower-1" alt="" />
       <img src={pixelRunner2} className="pixel-player catcher-1" alt="" />
       <div className="pixel-football football-throw-1" />
-      {/* Coaches watching */}
+
+      {/* === COACHES / SCOUTS === */}
       <img src={pixelCoach} className="pixel-player coach-1" alt="" />
       <img src={pixelCoach} className="pixel-player coach-2" alt="" />
-      {/* Cones for drills */}
-      <div className="pixel-cone" style={{top: '37%', left: '55%'}} />
-      <div className="pixel-cone" style={{top: '34%', left: '57%'}} />
-      <div className="pixel-cone" style={{top: '31%', left: '55%'}} />
-      <div className="pixel-cone" style={{top: '34%', left: '53%'}} />
-      <div className="pixel-cone" style={{top: '84%', left: '35%'}} />
-      <div className="pixel-cone" style={{top: '81%', left: '37%'}} />
-      <div className="pixel-cone" style={{top: '78%', left: '35%'}} />
-      <div className="pixel-cone" style={{top: '81%', left: '33%'}} />
+      <img src={pixelCoach} className="pixel-player coach-3" alt="" />
     </div>
   );
 
   // Team logo watermark when single team selected
   const teamLogoWatermark = myTeams.length === 1 && teamLogos[myTeams[0]] ? (
-    <div className="fixed inset-0 pointer-events-none z-0 flex items-center justify-center">
-      <img src={teamLogos[myTeams[0]]} alt="" className="w-64 h-64 opacity-15" />
+    <div className="fixed inset-0 pointer-events-none flex items-center justify-center" style={{zIndex: 2}}>
+      <img src={teamLogos[myTeams[0]]} alt="" className="w-72 h-72 opacity-20" />
     </div>
   ) : null;
 

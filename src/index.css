@@ -65,7 +65,7 @@
   z-index: 1;
 }
 
-/* 8-bit combine characters overlay */
+/* 8-bit combine overlay */
 .combine-overlay {
   position: fixed;
   top: 0;
@@ -81,128 +81,298 @@
 .pixel-player {
   position: absolute;
   image-rendering: pixelated;
-  width: 12px;
-  height: 16px;
+  width: 14px;
+  height: 18px;
 }
 
-/* --- 40-YARD DASH RUNNERS --- */
+/* --- STATION LABELS --- */
+.station-label {
+  position: absolute;
+  font-family: 'Courier New', monospace;
+  font-size: 9px;
+  font-weight: bold;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+  white-space: nowrap;
+}
+
+/* --- STATION AREAS (dashed borders) --- */
+.station-area {
+  position: absolute;
+  border: 1px dashed rgba(255,255,255,0.2);
+  border-radius: 4px;
+}
+
+/* ====== 40-YARD DASH STATION (top-left area) ====== */
+.dash-station {
+  top: 5%;
+  left: 2%;
+  width: 45%;
+  height: 18%;
+}
+.dash-label {
+  top: 5%;
+  left: 4%;
+}
+/* Start and finish lines */
+.dash-start-line, .dash-finish-line {
+  position: absolute;
+  width: 2px;
+  height: 14%;
+  background: rgba(255,255,255,0.35);
+  top: 7%;
+}
+.dash-start-line { left: 6%; }
+.dash-finish-line { left: 44%; }
+
 .runner-1 {
-  top: 18%;
-  animation: run-across 6s linear infinite;
+  top: 8%;
+  animation: run-dash 4s linear infinite;
 }
 .runner-2 {
-  top: 42%;
-  animation: run-across 7.5s linear infinite 2s;
+  top: 13%;
+  animation: run-dash 4.5s linear infinite 1.5s;
 }
 .runner-3 {
-  top: 72%;
-  animation: run-across 5.5s linear infinite 4s;
-}
-.runner-4 {
-  top: 88%;
-  animation: run-across 8s linear infinite 1s;
-}
-.runner-5 {
-  top: 55%;
-  animation: run-across 6.8s linear infinite 3.5s;
+  top: 18%;
+  animation: run-dash 3.8s linear infinite 3s;
 }
 
-@keyframes run-across {
-  0% { left: -20px; }
-  100% { left: calc(100% + 20px); }
+@keyframes run-dash {
+  0% { left: 6%; }
+  85% { left: 43%; }
+  86% { left: 43%; opacity: 1; }
+  100% { left: 43%; opacity: 0.3; }
 }
 
-/* --- SHUTTLE RUN PLAYERS --- */
-.shuttle-1 {
-  top: 30%;
-  left: 15%;
-  animation: shuttle-run 2.5s ease-in-out infinite;
+/* ====== VERTICAL JUMP STATION (top-right) ====== */
+.jump-station {
+  top: 5%;
+  right: 2%;
+  width: 20%;
+  height: 18%;
 }
-.shuttle-2 {
-  top: 60%;
-  left: 70%;
-  animation: shuttle-run 3s ease-in-out infinite 1s;
+.jump-label {
+  top: 5%;
+  right: 4%;
+}
+/* Height measurement pole */
+.jump-pole {
+  position: absolute;
+  width: 3px;
+  height: 14%;
+  top: 7%;
+  right: 14%;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.3) 0px,
+    rgba(255,255,255,0.3) 4px,
+    rgba(255,0,0,0.3) 4px,
+    rgba(255,0,0,0.3) 8px
+  );
 }
 
-@keyframes shuttle-run {
-  0%, 100% { transform: translateX(0) scaleX(1); }
-  45% { transform: translateX(60px) scaleX(1); }
-  50% { transform: translateX(60px) scaleX(-1); }
-  95% { transform: translateX(0) scaleX(-1); }
-}
-
-/* --- JUMPING PLAYER (vertical jump test) --- */
 .jumper-1 {
-  top: 25%;
-  left: 45%;
-  animation: vertical-jump 1.8s ease-in-out infinite;
+  top: 16%;
+  right: 15%;
+  animation: vertical-jump 2s ease-in-out infinite;
 }
 .jumper-2 {
-  top: 78%;
-  left: 82%;
-  animation: vertical-jump 2s ease-in-out infinite 0.5s;
+  top: 16%;
+  right: 20%;
+  animation: vertical-jump 2.2s ease-in-out infinite 0.8s;
 }
 
 @keyframes vertical-jump {
   0%, 100% { transform: translateY(0); }
-  40% { transform: translateY(-24px); }
-  50% { transform: translateY(-26px); }
-  60% { transform: translateY(-24px); }
+  35% { transform: translateY(-30px); }
+  50% { transform: translateY(-34px); }
+  65% { transform: translateY(-30px); }
 }
 
-/* --- BENCH PRESS PLAYER --- */
+/* ====== BENCH PRESS STATION (middle-left) ====== */
+.bench-station {
+  top: 30%;
+  left: 2%;
+  width: 22%;
+  height: 16%;
+}
+.bench-label {
+  top: 30%;
+  left: 4%;
+}
+/* Bench/rack */
+.bench-rack {
+  position: absolute;
+  width: 30px;
+  height: 4px;
+  background: rgba(150,150,150,0.4);
+  top: 39%;
+  left: 8%;
+  border-radius: 1px;
+}
+/* Weight plates */
+.weight-plate {
+  position: absolute;
+  width: 4px;
+  height: 10px;
+  background: rgba(100,100,100,0.5);
+  top: 36%;
+  border-radius: 1px;
+}
+.weight-left { left: 7%; }
+.weight-right { left: calc(8% + 28px); }
+
 .bench-1 {
-  top: 50%;
-  left: 25%;
-  animation: bench-press 1.5s ease-in-out infinite;
+  top: 35%;
+  left: 10%;
+  animation: bench-press 1.8s ease-in-out infinite;
+}
+.bench-2 {
+  top: 35%;
+  left: 16%;
+  animation: bench-press 2s ease-in-out infinite 0.7s;
 }
 
 @keyframes bench-press {
   0%, 100% { transform: scaleY(1); }
-  50% { transform: scaleY(0.85); }
+  40% { transform: scaleY(0.82); }
+  50% { transform: scaleY(0.8); }
+  60% { transform: scaleY(0.82); }
 }
 
-/* --- CONE DRILL PLAYER --- */
-.cone-drill-1 {
-  top: 35%;
-  left: 55%;
-  animation: cone-drill 4s ease-in-out infinite;
+/* ====== 3-CONE DRILL STATION (middle-right) ====== */
+.cone-station {
+  top: 30%;
+  right: 2%;
+  width: 25%;
+  height: 16%;
 }
-.cone-drill-2 {
-  top: 82%;
-  left: 35%;
-  animation: cone-drill 3.5s ease-in-out infinite 2s;
+.cone-label {
+  top: 30%;
+  right: 4%;
+}
+
+.pixel-cone {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #ff6600;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  image-rendering: pixelated;
+}
+
+.cone-drill-1 {
+  top: 38%;
+  right: 14%;
+  animation: cone-drill 3.5s ease-in-out infinite;
 }
 
 @keyframes cone-drill {
   0% { transform: translate(0, 0) scaleX(1); }
-  20% { transform: translate(30px, -15px) scaleX(1); }
-  40% { transform: translate(0, -30px) scaleX(-1); }
-  60% { transform: translate(-30px, -15px) scaleX(-1); }
+  20% { transform: translate(35px, -20px) scaleX(1); }
+  40% { transform: translate(0, -40px) scaleX(-1); }
+  60% { transform: translate(-35px, -20px) scaleX(-1); }
   80% { transform: translate(0, 0) scaleX(1); }
   100% { transform: translate(0, 0) scaleX(1); }
 }
 
-/* --- CATCHING PLAYER --- */
+/* ====== BROAD JUMP STATION (bottom-left) ====== */
+.broad-station {
+  bottom: 18%;
+  left: 2%;
+  width: 30%;
+  height: 16%;
+}
+.broad-label {
+  bottom: 32%;
+  left: 4%;
+}
+/* Landing pit lines */
+.broad-line {
+  position: absolute;
+  width: 24%;
+  height: 1px;
+  background: rgba(255,255,255,0.25);
+  left: 4%;
+}
+
+.broad-jumper-1 {
+  bottom: 24%;
+  left: 6%;
+  animation: broad-jump 3s ease-in-out infinite;
+}
+
+@keyframes broad-jump {
+  0%, 15% { transform: translate(0, 0) scaleY(1); }
+  25% { transform: translate(0, 0) scaleY(0.8); }
+  40% { transform: translate(40px, -20px) scaleY(1); }
+  55% { transform: translate(70px, 0) scaleY(0.9); }
+  70%, 100% { transform: translate(70px, 0) scaleY(1); opacity: 0.5; }
+}
+
+/* ====== SHUTTLE RUN / 20-YARD SHUTTLE (bottom-center) ====== */
+.shuttle-station {
+  bottom: 18%;
+  left: 38%;
+  width: 24%;
+  height: 16%;
+}
+.shuttle-label {
+  bottom: 32%;
+  left: 40%;
+}
+/* Shuttle markers */
+.shuttle-marker {
+  position: absolute;
+  width: 2px;
+  height: 10%;
+  background: rgba(255,255,255,0.25);
+  bottom: 22%;
+}
+
+.shuttle-1 {
+  bottom: 23%;
+  left: 42%;
+  animation: shuttle-run 2.5s ease-in-out infinite;
+}
+.shuttle-2 {
+  bottom: 27%;
+  left: 42%;
+  animation: shuttle-run 2.8s ease-in-out infinite 1.2s;
+}
+
+@keyframes shuttle-run {
+  0%, 100% { transform: translateX(0) scaleX(1); }
+  45% { transform: translateX(80px) scaleX(1); }
+  50% { transform: translateX(80px) scaleX(-1); }
+  95% { transform: translateX(0) scaleX(-1); }
+}
+
+/* ====== RECEIVING STATION (bottom-right) ====== */
+.catch-station {
+  bottom: 18%;
+  right: 2%;
+  width: 25%;
+  height: 16%;
+}
+.catch-label {
+  bottom: 32%;
+  right: 4%;
+}
+
 .catcher-1 {
-  top: 15%;
-  left: 75%;
+  bottom: 22%;
+  right: 10%;
   animation: catch-ball 3s ease-in-out infinite;
 }
 
-@keyframes catch-ball {
-  0%, 30% { transform: translateY(0); }
-  40% { transform: translateY(-18px) rotate(-15deg); }
-  50% { transform: translateY(-20px) rotate(0deg); }
-  60% { transform: translateY(-10px) rotate(5deg); }
-  70%, 100% { transform: translateY(0) rotate(0deg); }
-}
-
-/* --- FOOTBALL (thrown for catching drill) --- */
 .pixel-football {
   position: absolute;
-  width: 6px;
-  height: 4px;
+  width: 8px;
+  height: 5px;
   image-rendering: pixelated;
   background: #8B4513;
   border-radius: 50%;
@@ -210,42 +380,51 @@
 }
 
 .football-throw-1 {
-  top: 13%;
+  bottom: 26%;
   animation: throw-ball 3s ease-in-out infinite;
 }
 
 @keyframes throw-ball {
-  0% { left: 60%; opacity: 1; transform: rotate(0deg); }
-  35% { left: 72%; opacity: 1; transform: translateY(-20px) rotate(360deg); }
-  45% { left: 74%; opacity: 1; transform: translateY(-8px) rotate(540deg); }
-  50% { left: 75%; opacity: 0; transform: translateY(0px) rotate(600deg); }
-  100% { left: 60%; opacity: 0; }
+  0% { right: 28%; opacity: 1; transform: rotate(0deg); }
+  35% { right: 14%; opacity: 1; transform: translateY(-25px) rotate(360deg); }
+  45% { right: 11%; opacity: 1; transform: translateY(-10px) rotate(540deg); }
+  50% { right: 10%; opacity: 0; transform: translateY(0px) rotate(600deg); }
+  100% { right: 28%; opacity: 0; }
 }
 
-/* --- STANDING COACHES / SCOUTS --- */
+@keyframes catch-ball {
+  0%, 30% { transform: translateY(0); }
+  40% { transform: translateY(-20px) rotate(-10deg); }
+  50% { transform: translateY(-22px) rotate(0deg); }
+  60% { transform: translateY(-12px) rotate(5deg); }
+  70%, 100% { transform: translateY(0) rotate(0deg); }
+}
+
+/* --- QB THROWER (for receiving station) --- */
+.thrower-1 {
+  bottom: 24%;
+  right: 26%;
+}
+
+/* --- COACHES / SCOUTS (watching from sidelines) --- */
 .coach-1 {
-  top: 20%;
-  left: 10%;
+  top: 52%;
+  left: 3%;
   animation: clipboard 2s ease-in-out infinite;
 }
 .coach-2 {
-  top: 65%;
-  left: 90%;
+  top: 52%;
+  right: 3%;
   animation: clipboard 2.5s ease-in-out infinite 1s;
+}
+.coach-3 {
+  bottom: 6%;
+  left: 50%;
+  animation: clipboard 3s ease-in-out infinite 0.5s;
 }
 
 @keyframes clipboard {
   0%, 100% { transform: rotate(0deg); }
   25% { transform: rotate(2deg); }
   75% { transform: rotate(-2deg); }
-}
-
-/* --- CONES (static) --- */
-.pixel-cone {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  background: #ff6600;
-  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-  image-rendering: pixelated;
 }
