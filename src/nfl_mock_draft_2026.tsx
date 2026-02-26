@@ -651,6 +651,8 @@ const NFLMockDraft = () => {
   const [myTeams, setMyTeams] = useState<string[]>([]);
   const [selectAll, setSelectAll] = useState(false);
   const [showAesthetics, setShowAesthetics] = useState(true);
+  const [fieldMode, setFieldMode] = useState(false);
+  const [typedKeys, setTypedKeys] = useState('');
   const [pick, setPick] = useState(0);
   const [picks, setPicks] = useState<any[]>([]);
   const [available, setAvailable] = useState(generateProspects());
@@ -1101,6 +1103,23 @@ const NFLMockDraft = () => {
   };
 
   // Sync selectAll state when individual teams are toggled
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      setTypedKeys(prev => {
+        const updated = (prev + e.key).slice(-5);
+        if (updated.endsWith('field')) {
+          setFieldMode(true);
+        } else if (updated.endsWith('draft')) {
+          setFieldMode(false);
+        }
+        return updated;
+      });
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   useEffect(() => {
     const allTeams = Object.keys(teamLogos);
     const allSelected = myTeams.length === allTeams.length && myTeams.length > 0;
@@ -2300,6 +2319,15 @@ const NFLMockDraft = () => {
       {showAesthetics ? 'FX ON' : 'FX OFF'}
     </button>
   );
+
+  if (fieldMode) {
+    return (
+      <div className="min-h-screen football-bg">
+        {showAesthetics && combineOverlay}
+        {aestheticsToggle}
+      </div>
+    );
+  }
 
   if (state === 'setup') {
     return (
